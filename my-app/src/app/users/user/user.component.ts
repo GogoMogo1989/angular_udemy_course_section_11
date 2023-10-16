@@ -7,7 +7,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  user: { id: number; name: string; } = {id: 0, name: 'name'}
+  user: { id: number; name: string; } | undefined
 
   constructor(private route: ActivatedRoute) { }
 
@@ -17,8 +17,10 @@ export class UserComponent implements OnInit {
       name: this.route.snapshot.params['name']
     };
     this.route.params.subscribe((params: Params)=>{
-        this.user.id = params['id'];
+      if (this.user) {
+        this.user.id = +params['id'];
         this.user.name = params['name'];
+      }
     }) 
   }
 
